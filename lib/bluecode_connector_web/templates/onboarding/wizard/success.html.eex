@@ -1,0 +1,20 @@
+<h1>Successful onboarding</h1>
+
+<br />
+<br />
+
+<a href="bluecode://closewebview" class="button"> Close </a>
+
+<br />
+<br />
+<br />
+<br />
+<hr>
+<h6>Debug section </h6>
+<pre>
+  <code>
+    Wallet ID: <%= @wallet_id %>
+    Contract Number: <%= @contract_number %>
+    Access Token: <%= @access_token %>
+  </code>
+</pre>

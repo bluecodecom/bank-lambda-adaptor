@@ -2,6 +2,8 @@
 
 <p>You will be redirected to the Bank Lambda oauth login </p>
 
+<br />
+<br />
 <%= link to: Routes.wizard_path(@conn, :new, jwt: @jwt), class: "btn btn-primary" do %>
   <strong>Login with Bank Lambda</strong>
 <% end %>
@@ -13,5 +15,7 @@
 <hr>
 <h6>Debug section </h6>
 <pre>
-Wallet ID:
+  <code>
+    Wallet ID: <%= @jwt %>
+  </code>
 </pre>

@@ -51,12 +51,10 @@ defmodule BluecodeConnectorWeb.Onboarding.WizardController do
         card_request_token: account.card_request_token
       })
 
-    # TODO
-
-    # - figure out how we redirect back to the application/webview
-
-    # WE DO NOT REALLY NEED THIS RESPONSE HERE.
-    # WE WILL NEED THAT WHEN WE ACTUALLY DO THE CALLS
-    text(conn, "SUCCESS")
+    render(conn, "success.html",
+      access_token: response.token.access_token,
+      contract_number: contract_number,
+      wallet_id: account.card_request_token
+    )
   end
 end
