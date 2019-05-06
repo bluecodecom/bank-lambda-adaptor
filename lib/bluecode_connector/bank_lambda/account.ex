@@ -11,8 +11,8 @@ defmodule BluecodeConnector.BankLambda.Account do
     timestamps()
   end
 
-  def changeset(user, attrs) do
-    user
+  def changeset(account, attrs) do
+    account
     |> cast(attrs, [:contract_number, :card_request_token, :oauth_code, :iban])
   end
 end
