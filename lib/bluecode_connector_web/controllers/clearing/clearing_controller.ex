@@ -6,7 +6,7 @@ defmodule BluecodeConnectorWeb.ClearingApi.ClearingController do
 
   alias BluecodeConnector.Repo
   alias BluecodeConnector.BankLambda.Account
-
+  alias BluecodeConnector.BankLambda.PaymentsApiClient
   require Logger
 
   @doc """
@@ -24,8 +24,9 @@ defmodule BluecodeConnectorWeb.ClearingApi.ClearingController do
         messages: [],
         data: %{
           tx: %{
-            issuer_tx_ref: resp["id"],
-            issuer_txevent_ref: resp["id"],
+            # Transparently pass back the paymentId created by Bank Lambda
+            issuer_tx_ref: resp["paymentId"],
+            issuer_txevent_ref: resp["paymentId"],
             issuer_txevent_time: :os.system_time(:millisecond),
             tx_state: "CLEARED"
           }
@@ -55,21 +56,17 @@ defmodule BluecodeConnectorWeb.ClearingApi.ClearingController do
       remittanceInformationUnstructured: params["merchant_tx_id"]
     }
 
-    PaymentsApiClient.new(access_token: acct.oauth_token)
-    |> PaymentsApiClient.payment!()
+    {:ok, %{body: body}} =
+      PaymentsApiClient.new(%{access_token: acct.oauth_token})
+      |> PaymentsApiClient.payment!(params)
 
-    # headers = [
-    #   access_token: acct.oauth_token
-    # ]
+    case body do
+      %{"transactionStatus" => "ACCC"} ->
+        {:ok, body}
 
-    # TODO: Call api here of fake simulator
-    # resp = psd2_client.post("/v1/payments/instant-sepa-...", headers, params)
-    # if resp["state"] == "ACPT" do ...
-
-    {:ok,
-     %{
-       id: UUID.uuid4()
-     }}
+      _ ->
+        {:error, %{body: body}}
+    end
   end
 
   defp find_account(contract_number) do
