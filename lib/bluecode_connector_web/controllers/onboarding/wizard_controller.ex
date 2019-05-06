@@ -1,6 +1,8 @@
 defmodule BluecodeConnectorWeb.Onboarding.WizardController do
   use BluecodeConnectorWeb, :controller
+
   alias BluecodeConnector.BankLambda
+  alias BluecodeConnector.Bluecode.ContractsApiClient
 
   def index(conn, %{"jwt" => jwt}) do
     render(conn, "index.html", jwt: jwt)
@@ -27,10 +29,21 @@ defmodule BluecodeConnectorWeb.Onboarding.WizardController do
     account = BankLambda.get_account_by!(contract_number: contract_number)
 
     BankLambda.update_account(account, %{"oauth_code" => code})
-    # TODO
 
-    # - create the BlueCode contract
-    # - craete the BlueCode card
+    # THIS NEEDS TO BE FIXED. DOES NOT WORK !
+    # client = ContractsApiClient.new("BANK_BLAU", "secret")
+
+    # ContractsApiClient.create_contract(client, %ContractsApiClient.Contract{
+    #   contract_number: contract_number,
+    #   bank_name: "Paydirekt"
+    # })
+
+    # ContractsApiClient.create_card(client, %{
+    #   contract_number: account.contract_number,
+    #   card_request_token: account.card_request_token
+    # })
+
+    # TODO
 
     # - figure out how we redirect back to the application/webview
 
