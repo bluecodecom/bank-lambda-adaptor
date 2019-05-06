@@ -43,7 +43,8 @@ defmodule BluecodeConnector.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:oauth2, "~> 1.0"}
+      {:oauth2, "~> 1.0"},
+      {:uuid, "~> 1.1"}
     ]
   end
 
