@@ -9,6 +9,8 @@ defmodule BluecodeConnectorWeb.Onboarding.WizardController do
   def new(conn, %{"jwt" => jwt}) do
     contract_number = UUID.uuid4()
 
+    BankLambda.create_account(%{"jwt" => jwt, "contract_number" => contract_number})
+
     redirect(conn,
       external:
         BluecodeConnector.BankLambda.OauthClient.authorize_url!([], %{
@@ -18,14 +20,18 @@ defmodule BluecodeConnectorWeb.Onboarding.WizardController do
   end
 
   def callback(conn, %{"code" => code, "contract_number" => contract_number}) do
+    account = BankLambda.get_account_by!(contract_number: contract_number)
+
+    BankLambda.update_account(account, %{"oauth_code" => code})
     # TODO
-    # - persist the code in the account and use it to get token in the future clearing controller
-    # - the token is here client.token.access_token
 
     # - create the BlueCode contract
     # - craete the BlueCode card
 
     # - figure out how we redirect back to the application/webview
+
+    # WE DO NOT REALLY NEED THIS RESPONSE HERE.
+    # WE WILL NEED THAT WHEN WE ACTUALLY DO THE CALLS
     response =
       BluecodeConnector.BankLambda.OauthClient.get_token!([code: code], %{
         contract_number: contract_number
