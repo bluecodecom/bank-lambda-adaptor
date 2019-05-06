@@ -27,20 +27,29 @@ defmodule BluecodeConnectorWeb.Onboarding.WizardController do
   def callback(conn, %{"code" => code, "contract_number" => contract_number}) do
     account = BankLambda.get_account_by!(contract_number: contract_number)
 
-    BankLambda.update_account(account, %{"oauth_code" => code})
+    response =
+      BluecodeConnector.BankLambda.OauthClient.get_token!([code: code], %{
+        contract_number: contract_number
+      })
 
-    # THIS NEEDS TO BE FIXED. DOES NOT WORK !
-    # client = ContractsApiClient.new("BANK_BLAU", "secret")
+    BankLambda.update_account(account, %{
+      oauth_code: code,
+      oauth_token: response.token.access_token
+    })
 
-    # ContractsApiClient.create_contract(client, %ContractsApiClient.Contract{
-    #   contract_number: contract_number,
-    #   bank_name: "Paydirekt"
-    # })
+    client = ContractsApiClient.new("BANK_BLAU", "secret")
 
-    # ContractsApiClient.create_card(client, %{
-    #   contract_number: account.contract_number,
-    #   card_request_token: account.card_request_token
-    # })
+    {:ok, _} =
+      ContractsApiClient.create_contract(client, %ContractsApiClient.Contract{
+        contract_number: contract_number,
+        member_id: "ATA0000001"
+      })
+
+    {:ok, _} =
+      ContractsApiClient.create_card(client, %{
+        contract_number: account.contract_number,
+        card_request_token: account.card_request_token
+      })
 
     # TODO
 
@@ -48,11 +57,6 @@ defmodule BluecodeConnectorWeb.Onboarding.WizardController do
 
     # WE DO NOT REALLY NEED THIS RESPONSE HERE.
     # WE WILL NEED THAT WHEN WE ACTUALLY DO THE CALLS
-    response =
-      BluecodeConnector.BankLambda.OauthClient.get_token!([code: code], %{
-        contract_number: contract_number
-      })
-
-    text(conn, "Access token: #{response.token.access_token}")
+    text(conn, "SUCCESS")
   end
 end

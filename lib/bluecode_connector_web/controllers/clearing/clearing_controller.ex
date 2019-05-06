@@ -57,7 +57,7 @@ defmodule BluecodeConnectorWeb.ClearingApi.ClearingController do
     }
 
     {:ok, %{body: body}} =
-      PaymentsApiClient.new(%{access_token: acct.oauth_code})
+      PaymentsApiClient.new(%{access_token: acct.oauth_token})
       |> PaymentsApiClient.payment!(params)
 
     case body do
