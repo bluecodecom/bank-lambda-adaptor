@@ -16,13 +16,12 @@ defmodule BluecodeConnectorWeb.Onboarding.WizardController do
       "contract_number" => contract_number
     })
 
-    redirect(
-      conn,
-      external:
-        BluecodeConnector.BankLambda.OauthClient.authorize_url!([], %{
-          contract_number: contract_number
-        })
-    )
+    url =
+      BluecodeConnector.BankLambda.OauthClient.authorize_url!([], %{
+        contract_number: contract_number
+      })
+
+    redirect(conn, external: url)
   end
 
   def callback(conn, %{"code" => code, "contract_number" => contract_number}) do

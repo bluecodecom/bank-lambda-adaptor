@@ -1,11 +1,17 @@
 
 
-<p> You will be redirected to the  Bank Lambda oauth login </p>
+<p>You will be redirected to the Bank Lambda oauth login </p>
 
+<%= link to: Routes.wizard_path(@conn, :new, jwt: @jwt), class: "btn btn-primary" do %>
+  <strong>Login with Bank Lambda</strong>
+<% end %>
 
-<%= link "CONTINUE", to: Routes.wizard_path(@conn, :new, jwt: @jwt), class: "button" %>
-
-
-<h3> Debug section </h3>
-
-- here show the wallet JWT
+<br />
+<br />
+<br />
+<br />
+<hr>
+<h6>Debug section </h6>
+<pre>
+Wallet ID:
+</pre>
