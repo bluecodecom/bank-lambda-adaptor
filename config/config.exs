@@ -27,12 +27,15 @@ config :phoenix, :json_library, Jason
 
 # Change the id and secret with properly generated from BankLambda
 config :bluecode_connector, BankLambda,
-  client_id: "b599bd9fdce794fb219a5ef938e599aba5b4eb1f7ee3994d96509ea2a0e0213e",
-  client_secret: "8d182d4605f0a723e2d58d021f91419e99d94627eb0ef381bbcd8f89b47bd70c",
-  redirect_uri: "http://localhost:4001/wizard/callback",
+  redirect_uri: "https://lambda-bluecode.#{System.get_env("BC_DEV_DOMAIN")}/wizard/callback",
   strategy: OAuth2.Strategy.AuthCode,
-  site: "http://localhost:4000",
+  site: "https://bank-lambda.#{System.get_env("BC_DEV_DOMAIN")}",
   authorize_url: "/oauth/authorize",
   token_url: "/oauth/token"
 
 import_config "#{Mix.env()}.exs"
+
+# Note: import_config/1 is relative to this file, File.exists?/1 isn't
+if File.exists?("#{Path.dirname(__ENV__.file)}/#{Mix.env()}.local.exs") do
+  import_config "#{Mix.env()}.local.exs"
+end
