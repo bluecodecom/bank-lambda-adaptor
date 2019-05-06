@@ -3,7 +3,7 @@
 <p> You will be redirected to the  Bank Lambda oauth login </p>
 
 
-<%= link "CONTINUE", to: Routes.wizard_path(@conn, :new), class: "button" %>
+<%= link "CONTINUE", to: Routes.wizard_path(@conn, :new, jwt: @jwt), class: "button" %>
 
 
 <h3> Debug section </h3>
