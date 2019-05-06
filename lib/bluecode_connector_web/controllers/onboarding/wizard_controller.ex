@@ -9,9 +9,13 @@ defmodule BluecodeConnectorWeb.Onboarding.WizardController do
   def new(conn, %{"jwt" => jwt}) do
     contract_number = UUID.uuid4()
 
-    BankLambda.create_account(%{"jwt" => jwt, "contract_number" => contract_number})
+    BankLambda.create_account(%{
+      "card_request_token" => jwt,
+      "contract_number" => contract_number
+    })
 
-    redirect(conn,
+    redirect(
+      conn,
       external:
         BluecodeConnector.BankLambda.OauthClient.authorize_url!([], %{
           contract_number: contract_number
