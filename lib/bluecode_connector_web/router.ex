@@ -28,6 +28,12 @@ defmodule BluecodeConnectorWeb.Router do
     post("/payment", ClearingController, :payment)
   end
 
+  scope "/clearing", BluecodeConnectorWeb.Clearing do
+    pipe_through :api
+
+    post "/payment", PaymentController, :create
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", BluecodeConnectorWeb do
   #   pipe_through :api

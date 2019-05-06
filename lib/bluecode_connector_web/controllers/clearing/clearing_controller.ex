@@ -55,9 +55,12 @@ defmodule BluecodeConnectorWeb.ClearingApi.ClearingController do
       remittanceInformationUnstructured: params["merchant_tx_id"]
     }
 
-    headers = [
-      access_token: acct.oauth_token
-    ]
+    PaymentsApiClient.new(access_token: acct.oauth_token)
+    |> PaymentsApiClient.payment!()
+
+    # headers = [
+    #   access_token: acct.oauth_token
+    # ]
 
     # TODO: Call api here of fake simulator
     # resp = psd2_client.post("/v1/payments/instant-sepa-...", headers, params)
