@@ -9,9 +9,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
   </head>
   <body style="background: #efefef">
-    <header style="display:none">
+    <header>
       <section class="container" style="margin-top: 20px;">
-        <h2><%= img_tag "https://assets.#{System.get_env("BC_DEV_DOMAIN")}/v2/images/issuers/blue_code/square_x3.png", height: 60 %> + <span style="background-color: orange; padding: 10px; display: inline-block; height: 60px; width: 60px; text-align: center; font-weight: bold;">λ</span> Bank Lambda</h2>
+        <h3><span style="background-color: orange; padding: 0px; display: inline-block; height: 40px; width: 40px; text-align: center; font-weight: bold;">λ</span> Bank Lambda</h3>
       </section>
     </header>
     <br />
