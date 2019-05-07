@@ -1,6 +1,8 @@
 defmodule BluecodeConnectorWeb.Onboarding.WizardController do
   use BluecodeConnectorWeb, :controller
+
   alias BluecodeConnector.BankLambda
+  alias BluecodeConnector.Bluecode.ContractsApiClient
 
   def index(conn, %{"jwt" => jwt}) do
     wallet_id = extract_wallet_id(jwt)
@@ -26,7 +28,6 @@ defmodule BluecodeConnectorWeb.Onboarding.WizardController do
 
   def callback(conn, %{"code" => code, "contract_number" => contract_number}) do
     account = BankLambda.get_account_by!(contract_number: contract_number)
-    wallet_id = extract_wallet_id(account.card_request_token)
 
     BankLambda.update_account(account, %{"oauth_code" => code})
     # TODO
@@ -43,7 +44,29 @@ defmodule BluecodeConnectorWeb.Onboarding.WizardController do
         contract_number: contract_number
       })
 
-    text(conn, "Access token: #{response.token.access_token}")
+    client = ContractsApiClient.new("BANK_BLAU", "secret")
+
+    # {:ok, _} =
+    ContractsApiClient.create_contract(client, %ContractsApiClient.Contract{
+      contract_number: contract_number,
+      member_id: "ATA0000001"
+    })
+
+    # {:ok, _} =
+    ContractsApiClient.create_card(client, %{
+      contract_number: account.contract_number,
+      card_request_token: account.card_request_token
+    })
+
+    wallet_id = extract_wallet_id(account.card_request_token)
+
+    render(
+      conn,
+      "success.html",
+      access_token: response.token.access_token,
+      contract_number: contract_number,
+      wallet_id: wallet_id
+    )
   end
 
   defp extract_wallet_id(jwt) do

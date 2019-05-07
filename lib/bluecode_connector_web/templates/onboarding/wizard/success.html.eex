@@ -1,9 +1,17 @@
-<h1>Successful onboarding</h1>
 
-<br />
-<br />
 
-<a href="bluecode://closewebview" class="button"> Close </a>
+<div class="card">
+  <div class="card-header">
+    <strong>✅ Successfully connected</strong>
+  </div>
+  <div class="card-body">
+
+  </div>
+  <div class="card-footer text-center">
+    <a href="bluecode://closewebview" class="btn btn-primary"> Return to App </a>
+  </div>
+</div>
+
 
 <br />
 <br />
@@ -13,8 +21,12 @@
 <h6>Debug section </h6>
 <pre>
 <code>
-Wallet ID: <%= @wallet_id %>
-Contract Number: <%= @contract_number %>
-Access Token: <%= String.slice(@access_token, 0, 10) <> "..." %>
+Bluecode <-> Lambda Adapter:
+- Wallet:   <%= @wallet_id %>
+- Contract: <%= @contract_number %>
+
+Lambda Adapter <-> Bank Lambda PSD2:
+- Access Token: <%= String.slice(@access_token, 0, 10) <> "..." %>
+- IBAN: ___
 </code>
 </pre>
