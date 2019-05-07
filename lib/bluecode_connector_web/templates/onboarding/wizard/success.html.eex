@@ -50,7 +50,7 @@ Bluecode <-> Lambda Adapter:
 - Contract: <%= @contract_number %>
 
 Lambda Adapter <-> Bank Lambda PSD2:
-- Access Token: <%= String.slice(@access_token, 0, 10) <> "..." %>
-- IBAN:         <%= @iban %>
+- OAuth Token: <%= String.slice(@access_token, 0, 10) <> "..." %>
+- IBAN:        <%= @iban %>
 </code>
 </pre>
