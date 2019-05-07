@@ -1,15 +1,15 @@
 defmodule BluecodeConnectorWeb.Onboarding.WizardController do
   use BluecodeConnectorWeb, :controller
-
   alias BluecodeConnector.BankLambda
-  alias BluecodeConnector.Bluecode.ContractsApiClient
 
   def index(conn, %{"jwt" => jwt}) do
-    render(conn, "index.html", jwt: jwt)
+    wallet_id = extract_wallet_id(jwt)
+
+    render(conn, "index.html", jwt: jwt, wallet_id: wallet_id)
   end
 
   def new(conn, %{"jwt" => jwt}) do
-    contract_number = UUID.uuid4()
+    contract_number = "anon_#{:crypto.rand_uniform(1_000_000, 9_000_000)}"
 
     BankLambda.create_account(%{
       "card_request_token" => jwt,
@@ -27,34 +27,33 @@ defmodule BluecodeConnectorWeb.Onboarding.WizardController do
   def callback(conn, %{"code" => code, "contract_number" => contract_number}) do
     account = BankLambda.get_account_by!(contract_number: contract_number)
 
+    BankLambda.update_account(account, %{"oauth_code" => code})
+    # TODO
+
+    # - create the BlueCode contract
+    # - craete the BlueCode card
+
+    # - figure out how we redirect back to the application/webview
+
+    # WE DO NOT REALLY NEED THIS RESPONSE HERE.
+    # WE WILL NEED THAT WHEN WE ACTUALLY DO THE CALLS
     response =
       BluecodeConnector.BankLambda.OauthClient.get_token!([code: code], %{
         contract_number: contract_number
       })
 
-    BankLambda.update_account(account, %{
-      oauth_code: code,
-      oauth_token: response.token.access_token
-    })
+    text(conn, "Access token: #{response.token.access_token}")
+  end
 
-    client = ContractsApiClient.new("BANK_BLAU", "secret")
+  defp extract_wallet_id(jwt) do
+    %JOSE.JWT{fields: payload} = JOSE.JWT.peek_payload(jwt)
 
-    {:ok, _} =
-      ContractsApiClient.create_contract(client, %ContractsApiClient.Contract{
-        contract_number: contract_number,
-        member_id: "ATA0000001"
-      })
+    wallet_id =
+      payload["wid"]
+      |> String.trim_leading("wlt_")
 
-    {:ok, _} =
-      ContractsApiClient.create_card(client, %{
-        contract_number: account.contract_number,
-        card_request_token: account.card_request_token
-      })
+    wids = String.split(wallet_id, "-")
 
-    render(conn, "success.html",
-      access_token: response.token.access_token,
-      contract_number: contract_number,
-      wallet_id: account.card_request_token
-    )
+    "#{hd(wids)}-...-#{List.last(wids)}"
   end
 end

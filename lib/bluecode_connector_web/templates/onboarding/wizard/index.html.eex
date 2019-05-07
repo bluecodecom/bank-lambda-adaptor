@@ -15,7 +15,7 @@
 <hr>
 <h6>Debug section </h6>
 <pre>
-  <code>
-    Wallet ID: <%= @jwt %>
-  </code>
+<code>
+Wallet ID: <%= @wallet_id %>
+</code>
 </pre>

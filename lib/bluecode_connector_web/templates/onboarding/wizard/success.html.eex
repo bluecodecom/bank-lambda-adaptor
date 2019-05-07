@@ -12,9 +12,9 @@
 <hr>
 <h6>Debug section </h6>
 <pre>
-  <code>
-    Wallet ID: <%= @wallet_id %>
-    Contract Number: <%= @contract_number %>
-    Access Token: <%= @access_token %>
-  </code>
+<code>
+Wallet ID: <%= @wallet_id %>
+Contract Number: <%= @contract_number %>
+Access Token: <%= @access_token %>
+</code>
 </pre>
