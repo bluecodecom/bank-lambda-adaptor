@@ -1,18 +1,26 @@
 
 
-<p>You will be redirected to the Bank Lambda oauth login </p>
+<div class="card">
+  <div class="card-header">
+    <strong>Authorize with your Bank Lambda account</strong>
+  </div>
+  <div class="card-body text-center">
 
-<br />
-<br />
-<%= link to: Routes.wizard_path(@conn, :new, jwt: @jwt), class: "btn btn-primary" do %>
-  <strong>Login with Bank Lambda</strong>
-<% end %>
+    <p>You will be redirected to the Bank Lambda OAuth login.</p>
+    <br />
+    <%= link to: Routes.wizard_path(@conn, :new, jwt: @jwt), class: "btn btn-warning btn-lg" do %>
+      <strong>Login with Bank Lambda</strong>
+    <% end %>
 
+    <p>
+
+    </p>
+  </div>
+</div>
 <br />
 <br />
 <br />
 <br />
-<hr>
 <h6>Debug section </h6>
 <pre>
 <code>

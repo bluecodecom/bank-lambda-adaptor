@@ -26,6 +26,7 @@ defmodule BluecodeConnectorWeb.Onboarding.WizardController do
 
   def callback(conn, %{"code" => code, "contract_number" => contract_number}) do
     account = BankLambda.get_account_by!(contract_number: contract_number)
+    wallet_id = extract_wallet_id(account.card_request_token)
 
     BankLambda.update_account(account, %{"oauth_code" => code})
     # TODO

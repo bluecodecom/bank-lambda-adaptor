@@ -15,6 +15,6 @@
 <code>
 Wallet ID: <%= @wallet_id %>
 Contract Number: <%= @contract_number %>
-Access Token: <%= @access_token %>
+Access Token: <%= String.slice(@access_token, 0, 10) <> "..." %>
 </code>
 </pre>

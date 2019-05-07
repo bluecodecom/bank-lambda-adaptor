@@ -8,8 +8,13 @@
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
   </head>
-  <body>
-  <br />
+  <body style="background: #efefef">
+    <header style="display:none">
+      <section class="container" style="margin-top: 20px;">
+        <h2><%= img_tag "https://assets.#{System.get_env("BC_DEV_DOMAIN")}/v2/images/issuers/blue_code/square_x3.png", height: 60 %> + <span style="background-color: orange; padding: 10px; display: inline-block; height: 60px; width: 60px; text-align: center; font-weight: bold;">λ</span> Bank Lambda</h2>
+      </section>
+    </header>
+    <br />
     <main role="main" class="container">
       <%= if get_flash(@conn, :info) do %>
         <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
