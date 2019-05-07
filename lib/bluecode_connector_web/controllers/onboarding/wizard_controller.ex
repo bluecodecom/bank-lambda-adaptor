@@ -31,8 +31,6 @@ defmodule BluecodeConnectorWeb.Onboarding.WizardController do
   def callback(conn, %{"code" => code, "contract_number" => contract_number}) do
     account = BankLambda.get_account_by!(contract_number: contract_number)
 
-    # WE DO NOT REALLY NEED THIS RESPONSE HERE.
-    # WE WILL NEED THAT WHEN WE ACTUALLY DO THE CALLS
     response =
       BluecodeConnector.BankLambda.OauthClient.get_token!([code: code], %{
         contract_number: contract_number
