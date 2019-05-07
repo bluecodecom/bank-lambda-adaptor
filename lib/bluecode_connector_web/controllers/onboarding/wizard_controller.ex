@@ -41,6 +41,8 @@ defmodule BluecodeConnectorWeb.Onboarding.WizardController do
       oauth_token: response.token.access_token
     })
 
+    account_name = "Checking Account"
+
     client = ContractsApiClient.new("BANK_BLAU", "secret")
 
     # {:ok, _} =
@@ -52,6 +54,7 @@ defmodule BluecodeConnectorWeb.Onboarding.WizardController do
     # {:ok, _} =
     ContractsApiClient.create_card(client, %{
       contract_number: account.contract_number,
+      display_name: account_name,
       card_request_token: account.card_request_token
     })
 
@@ -61,6 +64,7 @@ defmodule BluecodeConnectorWeb.Onboarding.WizardController do
       conn,
       "success.html",
       access_token: response.token.access_token,
+      account_name: account_name,
       contract_number: contract_number,
       wallet_id: wallet_id,
       iban: account.iban

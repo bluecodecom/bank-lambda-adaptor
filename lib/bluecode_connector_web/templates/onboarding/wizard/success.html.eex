@@ -23,7 +23,7 @@
           <strong><%= @contract_number %></strong>
         </td>
         <td>
-          Checking Account
+          <%= @account_name %>
           <br />
           <strong><%= String.slice(@iban || "DE0123213", 0, 6) %>...</strong>
         </td>
