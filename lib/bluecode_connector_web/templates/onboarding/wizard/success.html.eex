@@ -2,10 +2,34 @@
 
 <div class="card">
   <div class="card-header">
-    <strong>✅ Successfully connected</strong>
+    <strong>Successfully connected</strong>
   </div>
   <div class="card-body">
+    You have successfully connected following bank accounts with Bluecode:
 
+<br />
+<br />
+  <table class="table table-condensed">
+    <thead>
+      <tr>
+        <th>Bluecode ID</th>
+        <th>Bank Lambda Account</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          Contract<br />
+          <strong><%= @contract_number %></strong>
+        </td>
+        <td>
+          Checking Account
+          <br />
+          <strong><%= String.slice(@iban || "DE0123213", 0, 6) %>...</strong>
+        </td>
+      </tr>
+    </tbody>
+  </table>
   </div>
   <div class="card-footer text-center">
     <a href="bluecode://closewebview" class="btn btn-primary"> Return to App </a>
@@ -27,6 +51,6 @@ Bluecode <-> Lambda Adapter:
 
 Lambda Adapter <-> Bank Lambda PSD2:
 - Access Token: <%= String.slice(@access_token, 0, 10) <> "..." %>
-- IBAN: ___
+- IBAN:         <%= @iban %>
 </code>
 </pre>

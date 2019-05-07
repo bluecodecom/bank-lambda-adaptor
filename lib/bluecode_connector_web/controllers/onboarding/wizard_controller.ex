@@ -30,12 +30,6 @@ defmodule BluecodeConnectorWeb.Onboarding.WizardController do
     account = BankLambda.get_account_by!(contract_number: contract_number)
 
     BankLambda.update_account(account, %{"oauth_code" => code})
-    # TODO
-
-    # - create the BlueCode contract
-    # - craete the BlueCode card
-
-    # - figure out how we redirect back to the application/webview
 
     # WE DO NOT REALLY NEED THIS RESPONSE HERE.
     # WE WILL NEED THAT WHEN WE ACTUALLY DO THE CALLS
@@ -65,7 +59,8 @@ defmodule BluecodeConnectorWeb.Onboarding.WizardController do
       "success.html",
       access_token: response.token.access_token,
       contract_number: contract_number,
-      wallet_id: wallet_id
+      wallet_id: wallet_id,
+      iban: account.iban
     )
   end
 
