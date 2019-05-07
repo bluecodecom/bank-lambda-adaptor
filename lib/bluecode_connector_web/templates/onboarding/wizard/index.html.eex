@@ -2,10 +2,10 @@
 
 <div class="card">
   <div class="card-header">
-    <strong>Authorize Bluecode Payments</strong>
+    <strong>Authorization</strong>
   </div>
   <div class="card-body">
-    <p>You authorize Bluecode to make payments in the Bluecode network with your account for:</p>
+    <p>Herewith you authorize your bank to make Instant payments in the Bluecode acceptance network.</p>
     <ul class="list list-unstyled">
       <li>🛒 POS Payments</li>
       <li>🎮 Ecommerce Payments</li>
