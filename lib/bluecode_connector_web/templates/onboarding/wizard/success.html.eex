@@ -13,7 +13,7 @@
     <thead>
       <tr>
         <th>Bluecode ID</th>
-        <th>Bank Lambda Account</th>
+        <th>Lambda Account</th>
       </tr>
     </thead>
     <tbody>
