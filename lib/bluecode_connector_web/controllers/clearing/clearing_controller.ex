@@ -6,7 +6,7 @@ defmodule BluecodeConnectorWeb.ClearingApi.ClearingController do
 
   alias BluecodeConnector.Repo
   alias BluecodeConnector.BankLambda.Account
-  alias BluecodeConnector.BankLambda.PaymentsApiClient
+  alias BluecodeConnector.BankLambda.PispApiClient
   require Logger
 
   @doc """
@@ -67,8 +67,8 @@ defmodule BluecodeConnectorWeb.ClearingApi.ClearingController do
     }
 
     {:ok, %{body: body}} =
-      PaymentsApiClient.new(%{access_token: acct.oauth_token})
-      |> PaymentsApiClient.payment!(params)
+      PispApiClient.new(%{access_token: acct.oauth_token})
+      |> PispApiClient.payment!(params)
 
     case body do
       %{"transactionStatus" => "ACCC"} ->

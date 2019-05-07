@@ -1,4 +1,4 @@
-defmodule BluecodeConnector.BankLambda.PaymentsApiClient do
+defmodule BluecodeConnector.BankLambda.PispApiClient do
   use Tesla
 
   def new(params) do
