@@ -4,6 +4,8 @@ defmodule BluecodeConnectorWeb.Onboarding.WizardController do
   alias BluecodeConnector.BankLambda
   alias BluecodeConnector.Bluecode.ContractsApiClient
 
+  alias BluecodeConnector.BankLambda.AispApiClient
+
   def index(conn, %{"jwt" => jwt}) do
     wallet_id = extract_wallet_id(jwt)
 
@@ -36,12 +38,21 @@ defmodule BluecodeConnectorWeb.Onboarding.WizardController do
         contract_number: contract_number
       })
 
-    BankLambda.update_account(account, %{
-      oauth_code: code,
-      oauth_token: response.token.access_token
-    })
+    {:ok, account} =
+      BankLambda.update_account(account, %{
+        oauth_code: code,
+        oauth_token: response.token.access_token
+      })
 
-    account_name = "Checking Account"
+    {:ok, %{body: accounts}} =
+      AispApiClient.new(%{access_token: account.oauth_token})
+      |> AispApiClient.accounts()
+
+    main_acct = List.first(accounts["accounts"])
+
+    iban = main_acct["iban"]
+    account_name = main_acct["name"]
+    {:ok, account} = BankLambda.update_account(account, %{iban: iban})
 
     client = ContractsApiClient.new("BANK_BLAU", "secret")
 
