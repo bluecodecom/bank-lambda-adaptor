@@ -33,7 +33,7 @@ config :bluecode_connector, BankLambda,
   token_url: "/oauth/token"
 
 config :bluecode_connector, :bc_auth,
-  username: "BC_ADAPTER_USERNAME",
+  username: System.get_env("BC_ADAPTER_USERNAME"),
   password: System.get_env("BC_ADAPTER_PASSWORD")
 
 config :bluecode_connector, :bluecode_member_id, "DEI0000099"
