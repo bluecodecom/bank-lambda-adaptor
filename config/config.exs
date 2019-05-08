@@ -36,6 +36,8 @@ config :bluecode_connector, :bc_auth,
   username: "BC_ADAPTER_USERNAME",
   password: System.get_env("BC_ADAPTER_PASSWORD")
 
+config :bluecode_connector, :bluecode_member_id, "DEI0000099"
+
 import_config "#{Mix.env()}.exs"
 
 # Note: import_config/1 is relative to this file, File.exists?/1 isn't

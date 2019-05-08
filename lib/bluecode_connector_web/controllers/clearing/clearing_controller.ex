@@ -5,7 +5,7 @@ defmodule BluecodeConnectorWeb.ClearingApi.ClearingController do
   use BluecodeConnectorWeb, :controller
 
   alias BluecodeConnector.Repo
-  alias BluecodeConnector.Consumers.Account
+  alias BluecodeConnector.MappingTables.Account
   alias BluecodeConnector.BankLambda.PispApiClient
   require Logger
 

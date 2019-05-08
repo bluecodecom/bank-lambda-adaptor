@@ -1,4 +1,4 @@
-defmodule BluecodeConnector.Consumers.Account do
+defmodule BluecodeConnector.MappingTables.Account do
   use Ecto.Schema
   import Ecto.Changeset
 
