@@ -1,13 +1,13 @@
-defmodule BluecodeConnector.BankLambda.Account do
+defmodule BluecodeConnector.Consumers.Account do
   use Ecto.Schema
   import Ecto.Changeset
 
   schema "accounts" do
-    field :contract_number, :string
-    field :card_request_token, :string
-    field :oauth_code, :string
-    field :iban, :string
-    field :oauth_token, :string
+    field(:contract_number, :string)
+    field(:card_request_token, :string)
+    field(:oauth_code, :string)
+    field(:iban, :string)
+    field(:oauth_token, :string)
 
     timestamps()
   end

@@ -1,7 +1,7 @@
 defmodule BluecodeConnector.BankLambda do
   import Ecto.Query, warn: false
   alias BluecodeConnector.Repo
-  alias BluecodeConnector.BankLambda.Account
+  alias BluecodeConnector.Consumers.Account
 
   def get_account_by!(attributes), do: Repo.get_by!(Account, attributes)
 

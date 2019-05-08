@@ -7,8 +7,7 @@
 # General application configuration
 use Mix.Config
 
-config :bluecode_connector,
-  ecto_repos: [BluecodeConnector.Repo]
+config :bluecode_connector, ecto_repos: [BluecodeConnector.Repo]
 
 # Configures the endpoint
 config :bluecode_connector, BluecodeConnectorWeb.Endpoint,
@@ -32,6 +31,10 @@ config :bluecode_connector, BankLambda,
   site: "https://bank-lambda.#{System.get_env("BC_DEV_DOMAIN")}",
   authorize_url: "/oauth/authorize",
   token_url: "/oauth/token"
+
+config :bluecode_connector, :bc_auth,
+  username: "BC_ADAPTER_USERNAME",
+  password: System.get_env("BC_ADAPTER_PASSWORD")
 
 import_config "#{Mix.env()}.exs"
 

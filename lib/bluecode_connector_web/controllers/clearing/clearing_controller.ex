@@ -5,13 +5,12 @@ defmodule BluecodeConnectorWeb.ClearingApi.ClearingController do
   use BluecodeConnectorWeb, :controller
 
   alias BluecodeConnector.Repo
-  alias BluecodeConnector.BankLambda.Account
+  alias BluecodeConnector.Consumers.Account
   alias BluecodeConnector.BankLambda.PispApiClient
   require Logger
 
   @doc """
   Tries to insert a record and swallows any exceptions.
-
   """
   def payment(conn, %{"contract_number" => contract_number} = params) do
     with {:ok, acct} <- find_account(contract_number),
@@ -62,7 +61,6 @@ defmodule BluecodeConnectorWeb.ClearingApi.ClearingController do
       instructedAmount: %{currency: "EUR", amount: params["amount"]},
       creditorName: params["merchant_name"],
       endToEndIdentification: params["bc_tx_id"],
-      #
       remittanceInformationUnstructured: params["acquirer_tx_id"]
     }
 

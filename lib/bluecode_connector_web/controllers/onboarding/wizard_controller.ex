@@ -52,7 +52,8 @@ defmodule BluecodeConnectorWeb.Onboarding.WizardController do
     account_name = main_acct["name"]
     {:ok, account} = BankLambda.update_account(account, %{iban: iban})
 
-    client = ContractsApiClient.new("BANK_BLAU", "secret")
+    bc_auth = Application.get_env(:bluecode_connector, :bc_auth)
+    client = ContractsApiClient.new(bc_auth[:username], bc_auth[:password])
 
     # {:ok, _} =
     ContractsApiClient.create_contract(client, %ContractsApiClient.Contract{
