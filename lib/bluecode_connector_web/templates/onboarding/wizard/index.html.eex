@@ -5,23 +5,17 @@
     <strong>Authorization</strong>
   </div>
   <div class="card-body">
-    <p>Herewith you authorize your bank to make Instant payments in the Bluecode acceptance network.</p>
     <ul class="list list-unstyled">
       <li>🛒 POS Payments</li>
       <li>🎮 Ecommerce Payments</li>
     </ul>
     <br />
-    <br />
-
     <div>
       <input type="checkbox" name="terms" checked>
         Herewith you authorize Bank Lambda to make Instant payments in the Bluecode acceptance network
       <br>
     </div>
-
     <br />
-    <br />
-
     <p class="text-center">
     <%= link to: Routes.wizard_path(@conn, :new, jwt: @jwt), class: "btn btn-warning btn-lg" do %>
       <strong>Login with Bank Lambda</strong>

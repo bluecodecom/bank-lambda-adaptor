@@ -23,24 +23,12 @@ defmodule BluecodeConnector.Bluecode.ContractsApiClient do
   end
 
   def new(username, password) do
-    config = Application.get_env(:sdd_solaris, __MODULE__) || %{}
-
-    Tesla.client(
-      [
-        {Tesla.Middleware.BaseUrl, "https://contracts-api.#{System.get_env("BC_DEV_DOMAIN")}"},
-        {Tesla.Middleware.BasicAuth, username: username, password: password},
-        Tesla.Middleware.JSON,
-        Tesla.Middleware.Logger
-      ] ++
-        case Mix.env() do
-          :test -> []
-          _ -> [{Tesla.Middleware.Timeout, timeout: config[:timeout] || 5_000}]
-        end ++
-        [
-          {Tesla.Middleware.Opts,
-           adapter: [ssl_options: [cacertfile: "/etc/bluecode/certs/ca-bundle.pem"]]}
-        ]
-    )
+    Tesla.client([
+      {Tesla.Middleware.BaseUrl, "https://contracts-api.#{System.get_env("BC_DEV_DOMAIN")}"},
+      {Tesla.Middleware.BasicAuth, username: username, password: password},
+      Tesla.Middleware.JSON,
+      Tesla.Middleware.Logger
+    ])
   end
 
   def create_contract(%Tesla.Client{} = client, %Contract{} = contract) do
@@ -87,11 +75,16 @@ defmodule BluecodeConnector.Bluecode.ContractsApiClient do
           %{"errors" => [%{"source" => %{"parameter" => index}}]} ->
             case index do
               # on card calls
-              "wallet_id_contract_id" -> {:card_exists_for_wallet, body}
+              "wallet_id_contract_id" ->
+                {:card_exists_for_wallet, body}
+
               # on contract calls
-              "issuer_contract_number" -> {:contract_already_taken, body}
+              "issuer_contract_number" ->
+                {:contract_already_taken, body}
+
               # "not allowed to have more than 2 SDD contracts"
-              "wallet_id" -> {:contract_limit, body}
+              "wallet_id" ->
+                {:contract_limit, body}
             end
 
           _ ->
