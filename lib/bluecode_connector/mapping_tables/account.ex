@@ -4,10 +4,18 @@ defmodule BluecodeConnector.MappingTables.Account do
 
   schema "accounts" do
     field(:contract_number, :string)
+
+    # Temporary card_request_token, can be discarded after contract was
+    # connected to a card (and store card_id instead).
     field(:card_request_token, :string)
+
     field(:oauth_code, :string)
-    field(:iban, :string)
+    # TODO: store oauth_token encrypted in database
     field(:oauth_token, :string)
+
+    # Required for PISP calls.
+    # TODO: store iban encrypted in database
+    field(:iban, :string)
 
     timestamps()
   end
