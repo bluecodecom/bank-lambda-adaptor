@@ -2,7 +2,7 @@
 
 An example proof of concept implementation of a "Bluecode issuer adapter" for banks with PSD2 APIs.
 
-This adapter connects to (Bank Lambda)[https://github.com/bluecodecom/bank-lambda], a simulator of a PSD2-compliant bank, with a OAuth login and PSD2 APIs implemented according to Berlin Group standards.
+This adapter connects to [Bank Lambda](https://github.com/bluecodecom/bank-lambda), a simulator of a PSD2-compliant bank, with a OAuth login and PSD2 APIs implemented according to Berlin Group standards.
 
 The adapter connects to following standard APIs and components of a PSD2 compliant bank:
 - OAuth login for consumers to authorize instant payments
